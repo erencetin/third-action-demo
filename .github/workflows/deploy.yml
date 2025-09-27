@@ -4,35 +4,7 @@ on:
     branches:
       - master
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm install
-      - name: Run tests
-        run: npm test
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm install
-      - name: Run linter
-        run: npm run lint
   deploy:
-    needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -43,5 +15,9 @@ jobs:
           node-version: '18'
       - name: Install dependencies
         run: npm install
+      - name: Test
+        run: npm test
+      - name: Lint
+        run: npm run lint
       - name: Deploy to production
         run: echo "Deploying to production server..."
